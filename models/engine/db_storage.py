@@ -1,103 +1,119 @@
 #!/usr/bin/python3
-"""
-Comprises DBStorage class.
-"""
-
-import models
-from models.amenity import Amenity
-from models.base_model import BaseModel, Base
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
+'''
+    Define class DatabaseStorage
+'''
 from os import getenv
-import sqlalchemy
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+from sqlalchemy import create_engine, MetaData
+from sqlalchemy.orm import sessionmaker, scoped_session
+import models
+from models.state import State
+from models.city import City
+from models.base_model import Base
 
 
 class DBStorage:
-    """Engages in MySQL database interaction"""
+    '''
+        Create SQLalchemy database
+    '''
     __engine = None
     __session = None
 
     def __init__(self):
-        """Create a DBStorage instance."""
-        HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
-        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
-        HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
-        HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
-        HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
-                                             HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
-        if HBNB_ENV == "test":
+        '''
+            Create engine and link to MySQL databse (hbnb_dev, hbnb_dev_db)
+        '''
+        user = getenv("HBNB_MYSQL_USER")
+        pwd = getenv("HBNB_MYSQL_PWD")
+        host = getenv("HBNB_MYSQL_HOST")
+        db = getenv("HBNB_MYSQL_DB")
+        envv = getenv("HBNB_ENV", "none")
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+            user, pwd, host, db), pool_pre_ping=True)
+        if envv == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Inquiry about the active database session"""
-        new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
-        return (new_dict)
+        '''
+            Query current database session
+        '''
+        db_dict = {}
+
+        if cls is not None and cls != '':
+            objs = self.__session.query(models.classes[cls]).all()
+            for obj in objs:
+                key = "{}.{}".format(obj.__class__.__name__, obj.id)
+                db_dict[key] = obj
+            return db_dict
+        else:
+            for k, v in models.classes.items():
+                if k != "BaseModel":
+                    objs = self.__session.query(v).all()
+                    if len(objs) > 0:
+                        for obj in objs:
+                            key = "{}.{}".format(obj.__class__.__name__,
+                                                 obj.id)
+                            db_dict[key] = obj
+            return db_dict
 
     def new(self, obj):
-        """Include the item in active database session."""
+        '''
+            Add object to current database session
+        '''
         self.__session.add(obj)
 
     def save(self):
-        """Enable all modifications for current database session."""
+        '''
+            Commit all changes of current database session
+        '''
         self.__session.commit()
 
     def delete(self, obj=None):
-        """Remove from object in current database session if none"""
+        '''
+            Delete from current database session
+        '''
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        """Uses the database to refresh data"""
-        Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session
+        '''
+            Commit all changes of current database session
+        '''
+        self.__session = Base.metadata.create_all(self.__engine)
+        factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(factory)
+        self.__session = Session()
 
     def close(self):
-        """Using private session attribute to delete() method."""
-        self.__session.remove()
+        '''
+            Remove private session attribute
+        '''
+        self.__session.close()
 
     def get(self, cls, id):
-        '''get: retrieve object from the file storage by class and id'''
-        if cls in classes.values() and id and type(id) == str:
-            d_obj = self.all(cls)
-            for key, values in d_obj.items():
+        '''
+        gets an object
+        Args:
+            cls (str): class name
+            id (str): object ID
+        Returns:
+            an object based on class name and its ID
+        '''
+        obj_dict = models.storage.all(cls)
+        for k, v in obj_dict.items():
+            matchstring = cls + '.' + id
+            if k == matchstring:
+                return v
 
-        """Using its class and id retrieve object from file storage."""
-        if cls in classes.values() and id and type(id) == str:
-            d_obj = self.all(cls)
-            for key, value in d_obj.items():
-                if key.split(".")[1] == id:
-                    return value
         return None
 
     def count(self, cls=None):
-        '''count: count the no of obj in storage matching the given class'''
-        data = self.all(cls)
-        if cls in classes.values():
-            data = self.all(clsa)
-=======
-        """Calculate how many things in storage are in the designated class."""
-        data = self.all(cls)
-        if cls in classes.values():
-            data = self.all(cls)
->>>>>>> 32f971af754391d0ddcb1a44afeabc3364a8eed4
-        return len(data)
+        '''
+        counts number of objects of a class (if given)
+        Args:
+            cls (str): class name
+        Returns:
+            number of objects in class, if no class name given
+            return total number of objects in database
+        '''
+        obj_dict = models.storage.all(cls)
+        return len(obj_dict)
