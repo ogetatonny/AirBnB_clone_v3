@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Testing the module called file_storage.
+    Testing the file_storage module.
 '''
 import time
 import unittest
@@ -20,12 +20,12 @@ db = getenv("HBNB_TYPE_STORAGE")
 @unittest.skipIf(db != 'db', "Testing DBstorage only")
 class test_DBStorage(unittest.TestCase):
     '''
-        Examining the class DB_Storage.
+        Testing the DB_Storage class
     '''
     @classmethod
     def setUpClass(cls):
         '''
-            launching the classes.
+            Initializing classes
         '''
         cls.dbstorage = DBStorage()
         cls.output = StringIO()
@@ -34,34 +34,34 @@ class test_DBStorage(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         '''
-            Eliminate the variables.
+            delete variables
         '''
         del cls.dbstorage
         del cls.output
 
     def create(self):
         '''
-            Build an HBNBCommand()
+            Create HBNBCommand()
         '''
         return HBNBCommand()
 
     def test_new(self):
         '''
-            Test Database Update.
+            Test DB new
         '''
         new_obj = State(name="California")
         self.assertEqual(new_obj.name, "California")
 
     def test_dbstorage_user_attr(self):
         '''
-            Assessing the user characteristics.
+            Testing User attributes
         '''
         new = User(email="melissa@hbtn.com", password="hello")
         self.assertTrue(new.email, "melissa@hbtn.com")
 
     def test_dbstorage_check_method(self):
         '''
-            It verify that there are techniques available.
+            Check methods exists
         '''
         self.assertTrue(hasattr(self.dbstorage, "all"))
         self.assertTrue(hasattr(self.dbstorage, "__init__"))
@@ -72,7 +72,7 @@ class test_DBStorage(unittest.TestCase):
 
     def test_dbstorage_all(self):
         '''
-            Testing every feature function.
+            Testing all function
         '''
         storage.reload()
         result = storage.all("")
@@ -86,7 +86,7 @@ class test_DBStorage(unittest.TestCase):
 
     def test_dbstorage_new_save(self):
         '''
-           Testing the save technique.
+           Testing save method
         '''
         new_state = State(name="NewYork")
         storage.new(new_state)
@@ -101,7 +101,7 @@ class test_DBStorage(unittest.TestCase):
 
     def test_dbstorage_delete(self):
         '''
-            Trying the remove technique.
+            Testing delete method
         '''
         new_user = User(email="haha@hehe.com", password="abc",
                         first_name="Adriel", last_name="Tolentino")
@@ -118,13 +118,13 @@ class test_DBStorage(unittest.TestCase):
 
     def test_model_storage(self):
         '''
-            Check whether storage is a DBStorage instance by running a test.
+            Test to check if storage is an instance for DBStorage
         '''
         self.assertTrue(isinstance(storage, DBStorage))
 
     def test_get(self):
         '''
-            Check that the get method returns the requested object.
+            Test if get method retrieves obj requested
         '''
         new_state = State(name="NewYork")
         storage.new(new_state)
@@ -133,37 +133,9 @@ class test_DBStorage(unittest.TestCase):
         self.assertTrue(result.id, new_state.id)
         self.assertIsInstance(result, State)
 
-<<<<<<< HEAD
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
-
-    def test_get(self):
-        """Tests the method for getting an instance db storage"""
-        storage = DBStorage()
-        dic = {"name": "Cundinamarca"}
-        instance = State(**dic)
-        storage.new(instance)
-        storage.save()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
-
-    def test_count(self):
-        """ Tests count method db storage"""
-        storage = DBStorage()
-        dic = {"name": "Vecindad"}
-        state = State(**dic)
-        storage.new(state)
-        dic = {"name": "Mexico", "state_id": state.id}
-        city = City(**dic)
-        storage.new(city)
-        storage.save()
-        c = storage.count()
-        self.assertEqual(len(storage.all()), c)
-=======
     def test_count(self):
         '''
-            Verify that count method yields anticipated items.
+            Test if count method returns expected number of objects
         '''
         storage.reload()
         old_count = storage.count("State")
@@ -174,4 +146,3 @@ class test_DBStorage(unittest.TestCase):
         new_state3 = State(name="California")
         storage.new(new_state3)
         self.assertEqual(old_count + 3, storage.count("State"))
->>>>>>> 32f971af754391d0ddcb1a44afeabc3364a8eed4
