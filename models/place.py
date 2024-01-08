@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Define the class Place.
+    Describe the classroom environment.
 '''
 from os import getenv
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
@@ -19,7 +19,7 @@ place_amenity = Table('place_amenity', Base.metadata,
 
 class Place(BaseModel, Base):
     '''
-        Define the class Place that inherits from BaseModel.
+        Describe the Place class which is derived from BaseModel.
     '''
     __tablename__ = "places"
     if getenv("HBNB_TYPE_STORAGE", "fs") == "db":
@@ -54,8 +54,8 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             '''
-                Return list: review instances if Review.place_id==curr place.id
-                FileStorage relationship between Place and Review
+                Return list: Examine cases if Place-Review FileStorage
+                when Amenity.place_id=curr place.id
             '''
             list_reviews = []
             for review in models.storage.all(Review).values():
@@ -66,8 +66,8 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             '''
-                Return list: amenity inst's if Amenity.place_id=curr place.id
-                FileStorage many to many relationship between Place and Amenity
+                Return list: Facilities on-site there is a many-to-many
+                FileStorage link between the Amenity and the Place.
             '''
             list_amenities = []
             for amenity in models.storage.all(Amenity).values():
@@ -78,8 +78,8 @@ class Place(BaseModel, Base):
         @amenities.setter
         def amenities(self, amenity=None):
             '''
-                Set list: amenity instances if Amenity.place_id==curr place.id
-                Set by adding instance objs to amenity_ids attribute in Place
+                Set list: Amenities if Amenity.place_id == current place.id
+                Set amending Amenity_ids attribute in place instance objs.
             '''
             if amenity:
                 for amenity in models.storage.all(Amenity).values():

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 '''
-    All the test for the user model are implemented here.
+    Here is where the users model tests are put into practice
 '''
 
 import unittest
@@ -14,7 +14,7 @@ storage = getenv("HBNB_TYPE_STORAGE", "fs")
 
 class TestUser(unittest.TestCase):
     '''
-        Testing Place class
+        Testing Places class
     def test_pep8_style_check(self):
             Tests pep8 style
         style = pep8.StyleGuide(quiet=True)
@@ -26,7 +26,7 @@ class TestUser(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         '''
-            Sets up unittest
+            Unittest is set up
         '''
         cls.new_place = Place(city_id="0O01", user_id="0O02", name="house",
                               description="awesome", number_rooms=3,
@@ -37,7 +37,7 @@ class TestUser(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         '''
-            Tears down unittest
+            Destroys the unittest
         '''
         del cls.new_place
         try:
@@ -47,20 +47,20 @@ class TestUser(unittest.TestCase):
 
     def test_Place_dbtable(self):
         '''
-            Check if the tablename is correct
+            Verify that the tablename is accurate
         '''
         self.assertEqual(self.new_place.__tablename__, "places")
 
     def test_Place_inheritance(self):
         '''
-            tests that the City class Inherits from BaseModel
+            verifying that City class is derived from BaseModel
         '''
 
         self.assertIsInstance(self.new_place, BaseModel)
 
     def test_Place_attributes(self):
         '''
-            Checks that the attribute exist.
+            Verifies the existence of the attribute.
         '''
         self.assertTrue("city_id" in self.new_place.__dir__())
         self.assertTrue("user_id" in self.new_place.__dir__())
@@ -84,7 +84,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_longitude(self):
         '''
-            Test the type of longitude.
+            Check the longitude type
         '''
         longitude = getattr(self.new_place, "longitude")
         self.assertIsInstance(longitude, float)
@@ -92,7 +92,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_latitude(self):
         '''
-            Test the type of latitude
+            Check the latitude type
         '''
         latitude = getattr(self.new_place, "latitude")
         self.assertIsInstance(latitude, float)
@@ -100,7 +100,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_amenity(self):
         '''
-            Test the type of latitude
+            Check the kind of latitude
         '''
         amenity = getattr(self.new_place, "amenity_ids")
         self.assertIsInstance(amenity, list)
@@ -108,7 +108,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_price_by_night(self):
         '''
-            Test the type of price_by_night
+            Check the price_by_night type
         '''
         price_by_night = getattr(self.new_place, "price_by_night")
         self.assertIsInstance(price_by_night, int)
@@ -116,7 +116,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_max_guest(self):
         '''
-            Test the type of max_guest
+            Verify the max_guest type
         '''
         max_guest = getattr(self.new_place, "max_guest")
         self.assertIsInstance(max_guest, int)
@@ -124,7 +124,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_number_bathrooms(self):
         '''
-            Test the type of number_bathrooms
+            Check the number_bathrooms type
         '''
         number_bathrooms = getattr(self.new_place, "number_bathrooms")
         self.assertIsInstance(number_bathrooms, int)
@@ -132,7 +132,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_number_rooms(self):
         '''
-            Test the type of number_bathrooms
+            Test the number_bathrooms type
         '''
         number_rooms = getattr(self.new_place, "number_rooms")
         self.assertIsInstance(number_rooms, int)
@@ -140,7 +140,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_description(self):
         '''
-            Test the type of description
+            Try out different types of descriptions
         '''
         description = getattr(self.new_place, "description")
         self.assertIsInstance(description, str)
@@ -148,7 +148,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_name(self):
         '''
-            Test the type of name
+            Try out different names
         '''
         name = getattr(self.new_place, "name")
         self.assertIsInstance(name, str)
@@ -156,7 +156,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_user_id(self):
         '''
-            Test the type of user_id
+            Check the user_id type.
         '''
         user_id = getattr(self.new_place, "user_id")
         self.assertIsInstance(user_id, str)
@@ -164,7 +164,7 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_type_city_id(self):
         '''
-            Test the type of city_id
+            Check the city_id type
         '''
         city_id = getattr(self.new_place, "city_id")
         self.assertIsInstance(city_id, str)

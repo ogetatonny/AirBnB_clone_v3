@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 '''
-    All the test for the user model are implemented here.
+    All of the user model tests are implemented here.
 '''
 
 import unittest
@@ -15,13 +15,13 @@ storage = getenv("HBNB_TYPE_STORAGE", "fs")
 
 class TestReview(unittest.TestCase):
     '''
-        Testing Review class
+        Review class for testing
     '''
 
     @classmethod
     def setUpClass(cls):
         '''
-            Sets up unittest
+            Unittest is created
         '''
         cls.rev = Review()
         cls.rev.user_id = "Adriel and Melissa 123"
@@ -31,7 +31,7 @@ class TestReview(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         '''
-            Tears down unittest
+            Destroys the unittest
         '''
         del cls.rev
         try:
@@ -41,7 +41,7 @@ class TestReview(unittest.TestCase):
 
     def test_pep8_style_check(self):
         '''
-            Tests pep8 style
+            Pep8 style is tested
         '''
         style = pep8.StyleGuide(quiet=True)
         p = style.check_files(['models/review.py'])
@@ -49,19 +49,19 @@ class TestReview(unittest.TestCase):
 
     def test_Review_dbtable(self):
         '''
-            Check if the tablename is correct
+            Verify that the tablename is accurate
         '''
         self.assertEqual(self.rev.__tablename__, "reviews")
 
     def test_Review_inheritance(self):
         '''
-            Tests that the Review class Inherits from BaseModel
+            Verifies the Review class is descended from BaseModel
         '''
         self.assertIsInstance(self.rev, BaseModel)
 
     def test_Review_attributes(self):
         '''
-            Tests Review class has place_id, user_id and text attributes
+            Tests Review class contains place_id and user_id properties.
         '''
         self.assertTrue("place_id" in self.rev.__dir__())
         self.assertTrue("user_id" in self.rev.__dir__())
@@ -70,8 +70,8 @@ class TestReview(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_Review_attributes(self):
         '''
-            Test that Review class has place_id, user_id and text
-            attributes.
+            Verify that the review class has text
+            place_id and user_id attributes.
         '''
         place_id = getattr(self.rev, "place_id")
         user_id = getattr(self.rev, "user_id")

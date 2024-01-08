@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-''' Test suite for the console'''
+''' Console Test Suite'''
 
 
 import sys
@@ -17,9 +17,9 @@ db = getenv("HBNB_TYPE_STORAGE", "fs")
 
 
 class test_console(unittest.TestCase):
-    ''' Test the console module'''
+    ''' Examine the console module.'''
     def setUp(self):
-        '''setup for'''
+        '''preparation for'''
         self.backup = sys.stdout
         self.capt_out = StringIO()
         sys.stdout = self.capt_out
@@ -29,21 +29,21 @@ class test_console(unittest.TestCase):
         sys.stdout = self.backup
 
     def create(self):
-        ''' create an instance of the HBNBCommand class'''
+        ''' Make an instance of the class HBNBCommand'''
         return HBNBCommand()
 
     def test_quit(self):
-        ''' Test quit exists'''
+        ''' There is a test quit'''
         console = self.create()
         self.assertTrue(console.onecmd("quit"))
 
     def test_EOF(self):
-        ''' Test EOF exists'''
+        ''' Test EOF is present'''
         console = self.create()
         self.assertTrue(console.onecmd("EOF"))
 
     def test_all(self):
-        ''' Test all exists'''
+        ''' Verify everything is present'''
         console = self.create()
         console.onecmd("all")
         self.assertTrue(isinstance(self.capt_out.getvalue(), str))
@@ -51,7 +51,7 @@ class test_console(unittest.TestCase):
     @unittest.skipIf(db == "db", "Testing database storage only")
     def test_show(self):
         '''
-            Testing that show exists
+            Testing that demonstrates
         '''
         console = self.create()
         console.onecmd("create User")
@@ -68,7 +68,7 @@ class test_console(unittest.TestCase):
     @unittest.skipIf(db == "db", "Testing database storage only")
     def test_show_class_name(self):
         '''
-            Testing the error messages for class name missing.
+            Examining the error messages for missing class names.
         '''
         console = self.create()
         console.onecmd("create User")
@@ -84,7 +84,7 @@ class test_console(unittest.TestCase):
 
     def test_show_class_name(self):
         '''
-            Test show message error for id missing
+            Test display error message for missing ID
         '''
         console = self.create()
         console.onecmd("create User")
@@ -101,7 +101,7 @@ class test_console(unittest.TestCase):
     @unittest.skipIf(db == "db", "Testing database storage only")
     def test_show_no_instance_found(self):
         '''
-            Test show message error for id missing
+            Test display message error due to lack ID
         '''
         console = self.create()
         console.onecmd("create User")
@@ -117,7 +117,7 @@ class test_console(unittest.TestCase):
 
     def test_create(self):
         '''
-            Test that create works
+            Test that produces results
         '''
         console = self.create()
         console.onecmd("create User email=adriel@hbnb.com password=abc")
@@ -125,7 +125,7 @@ class test_console(unittest.TestCase):
 
     def test_class_name(self):
         '''
-            Testing the error messages for class name missing.
+            Examining the error messages for missing class names.
         '''
         console = self.create()
         console.onecmd("create")
@@ -134,7 +134,7 @@ class test_console(unittest.TestCase):
 
     def test_class_name_doest_exist(self):
         '''
-            Testing the error messages for class name missing.
+            Verifying missing class name in the error messages.
         '''
         console = self.create()
         console.onecmd("create Binita")

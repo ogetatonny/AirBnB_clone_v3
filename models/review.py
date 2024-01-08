@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Implementation of the Review class
+    Putting the Review class into practice
 '''
 from os import getenv
 from sqlalchemy import Column, String, ForeignKey
@@ -10,7 +10,7 @@ from models.base_model import BaseModel, Base
 
 class Review(BaseModel, Base):
     '''
-        Implementation for the Review.
+        Application of the Review.
     '''
     __tablename__ = "reviews"
     if getenv("HBNB_TYPE_STORAGE") == "db":

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Testing the file_storage module.
+    Examining the module for file storage.
 '''
 import time
 import unittest
@@ -20,12 +20,12 @@ db = getenv("HBNB_TYPE_STORAGE")
 @unittest.skipIf(db != 'db', "Testing DBstorage only")
 class test_DBStorage(unittest.TestCase):
     '''
-        Testing the DB_Storage class
+        DB_Storage class testing
     '''
     @classmethod
     def setUpClass(cls):
         '''
-            Initializing classes
+            launching the classes
         '''
         cls.dbstorage = DBStorage()
         cls.output = StringIO()
@@ -34,34 +34,34 @@ class test_DBStorage(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         '''
-            delete variables
+            Eliminate variables
         '''
         del cls.dbstorage
         del cls.output
 
     def create(self):
         '''
-            Create HBNBCommand()
+            Build an HBNBCommand()
         '''
         return HBNBCommand()
 
     def test_new(self):
         '''
-            Test DB new
+            Test Database Update
         '''
         new_obj = State(name="California")
         self.assertEqual(new_obj.name, "California")
 
     def test_dbstorage_user_attr(self):
         '''
-            Testing User attributes
+            Assessing user characteristics
         '''
         new = User(email="melissa@hbtn.com", password="hello")
         self.assertTrue(new.email, "melissa@hbtn.com")
 
     def test_dbstorage_check_method(self):
         '''
-            Check methods exists
+            Verify that there are techniques available
         '''
         self.assertTrue(hasattr(self.dbstorage, "all"))
         self.assertTrue(hasattr(self.dbstorage, "__init__"))
@@ -72,7 +72,7 @@ class test_DBStorage(unittest.TestCase):
 
     def test_dbstorage_all(self):
         '''
-            Testing all function
+            Testing every feature
         '''
         storage.reload()
         result = storage.all("")
@@ -86,7 +86,7 @@ class test_DBStorage(unittest.TestCase):
 
     def test_dbstorage_new_save(self):
         '''
-           Testing save method
+           Testing the save technique
         '''
         new_state = State(name="NewYork")
         storage.new(new_state)
@@ -101,7 +101,7 @@ class test_DBStorage(unittest.TestCase):
 
     def test_dbstorage_delete(self):
         '''
-            Testing delete method
+            Trying the remove technique
         '''
         new_user = User(email="haha@hehe.com", password="abc",
                         first_name="Adriel", last_name="Tolentino")
@@ -118,13 +118,13 @@ class test_DBStorage(unittest.TestCase):
 
     def test_model_storage(self):
         '''
-            Test to check if storage is an instance for DBStorage
+            Check storage is DBStorage instance by running test
         '''
         self.assertTrue(isinstance(storage, DBStorage))
 
     def test_get(self):
         '''
-            Test if get method retrieves obj requested
+            Check get method returns the requested object
         '''
         new_state = State(name="NewYork")
         storage.new(new_state)
@@ -135,7 +135,7 @@ class test_DBStorage(unittest.TestCase):
 
     def test_count(self):
         '''
-            Test if count method returns expected number of objects
+            Verify that count method yields to number of items
         '''
         storage.reload()
         old_count = storage.count("State")

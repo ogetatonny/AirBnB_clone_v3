@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Testing the file_storage module.
+    Examining the module for file storage.
 '''
 
 import os
@@ -19,19 +19,19 @@ db = os.getenv("HBNB_TYPE_STORAGE")
 @unittest.skipIf(db == 'db', "Testing DBstorage only")
 class testFileStorage(unittest.TestCase):
     '''
-        Testing the FileStorage class
+        Examining the FileStorage category
     '''
 
     def setUp(self):
         '''
-            Initializing classes
+            launching the classes
         '''
         self.storage = FileStorage()
         self.my_model = BaseModel()
 
     def tearDown(self):
         '''
-            Cleaning up.
+            Tiding up.
         '''
 
         try:
@@ -41,15 +41,15 @@ class testFileStorage(unittest.TestCase):
 
     def test_all_return_type(self):
         '''
-            Tests the data type of the return value of the all method.
+            Checks data type of all method return value.
         '''
         storage_all = self.storage.all()
         self.assertIsInstance(storage_all, dict)
 
     def test_new_method(self):
         '''
-            Tests that the new method sets the right key and value pair
-            in the FileStorage.__object attribute
+            Verifies that the FileStorage.__object attribute is set
+            with the correct key and value pair using the new method
         '''
         self.storage.new(self.my_model)
         key = str(self.my_model.__class__.__name__ + "." + self.my_model.id)
@@ -57,8 +57,8 @@ class testFileStorage(unittest.TestCase):
 
     def test_objects_value_type(self):
         '''
-            Tests that the type of value contained in the FileStorage.__object
-            is of type obj.__class__.__name__
+            Verifies that the value type stored in FileStorage.__object is
+            of the form obj.__class__.__name__.
         '''
         self.storage.new(self.my_model)
         key = str(self.my_model.__class__.__name__ + "." + self.my_model.id)
@@ -67,14 +67,14 @@ class testFileStorage(unittest.TestCase):
 
     def test_save_file_exists(self):
         '''
-            Tests that a file gets created with the name file.json
+            Verifies the creation of a file with the name file.json
         '''
         self.storage.save()
         self.assertTrue(os.path.isfile("file.json"))
 
     def test_save_file_read(self):
         '''
-            Testing the contents of the files inside the file.json
+            Examining the files' contents within the file.json
         '''
         self.storage.save()
         self.storage.new(self.my_model)
@@ -86,7 +86,7 @@ class testFileStorage(unittest.TestCase):
 
     def test_the_type_file_content(self):
         '''
-            testing the type of the contents inside the file.
+            Examining the kind of content contained in the file.
         '''
         self.storage.save()
         self.storage.new(self.my_model)
@@ -98,8 +98,8 @@ class testFileStorage(unittest.TestCase):
 
     def test_reaload_without_file(self):
         '''
-            Tests that nothing happens when file.json does not exists
-            and reload is called
+            Verifies that nothing occurs upon file.json is
+            not present thus reload is invoked
         '''
 
         try:
@@ -110,7 +110,7 @@ class testFileStorage(unittest.TestCase):
 
     def test_delete(self):
         '''
-            Test delete method
+            Test the remove technique
         '''
         fs = FileStorage()
         new_state = State()
@@ -125,13 +125,13 @@ class testFileStorage(unittest.TestCase):
 
     def test_model_storage(self):
         '''
-            Test State model in Filestorage
+            Filestorage Test State Model
         '''
         self.assertTrue(isinstance(storage, FileStorage))
 
     def test_get(self):
         '''
-            Test if get method retrieves obj requested
+            Check the get method returns the requested object
         '''
         new_state = State(name="NewYork")
         storage.new(new_state)
@@ -142,7 +142,7 @@ class testFileStorage(unittest.TestCase):
 
     def test_count(self):
         '''
-            Test if count method returns expected number of objects
+            Verify count method that anticipated number of items
         '''
         old_count = storage.count("State")
         new_state1 = State(name="NewYork")

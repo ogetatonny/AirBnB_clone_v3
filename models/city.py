@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Define the class City.
+    Describe the class City.
 '''
 from os import getenv
 from sqlalchemy import Column, Integer, String, ForeignKey
@@ -12,7 +12,7 @@ from models.state import State
 
 class City(BaseModel, Base):
     '''
-        Define the class City that inherits from BaseModel.
+        Describe the City class which is derived from BaseModel..
     '''
     __tablename__ = "cities"
     if getenv("HBNB_TYPE_STORAGE") == "db":

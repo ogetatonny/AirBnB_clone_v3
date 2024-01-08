@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''creates a Blueprint instance with 'url_prefix' set to '/api/v1'.'''
+'''establishes Blueprint obj value '/api/v1' for 'url_prefix'.'''
 
 from flask import Blueprint
 

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""cities"""
+"""the cities"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
@@ -12,7 +12,7 @@ import uuid
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 @app_views.route('/states/<state_id>/cities/', methods=['GET'])
 def list_cities_of_state(state_id):
-    '''Retrieves a list of all City objects'''
+    '''Obtains list of every object in the City'''
     all_states = storage.all("State").values()
     state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
     if state_obj == []:
@@ -25,7 +25,7 @@ def list_cities_of_state(state_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 @app_views.route('/states/<state_id>/cities/', methods=['POST'])
 def create_city(state_id):
-    '''Creates a City'''
+    '''Constructs a City'''
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
@@ -44,7 +44,7 @@ def create_city(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
-    '''Retrieves a City object'''
+    '''Brings up a City object'''
     all_cities = storage.all("City").values()
     city_obj = [obj.to_dict() for obj in all_cities if obj.id == city_id]
     if city_obj == []:
@@ -54,7 +54,7 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
-    '''Deletes a City object'''
+    '''Removes a City entity'''
     all_cities = storage.all("City").values()
     city_obj = [obj.to_dict() for obj in all_cities if obj.id == city_id]
     if city_obj == []:
@@ -69,7 +69,7 @@ def delete_city(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def updates_city(city_id):
-    '''Updates a City object'''
+    '''Reveals a City item'''
     all_cities = storage.all("City").values()
     city_obj = [obj.to_dict() for obj in all_cities if obj.id == city_id]
     if city_obj == []:

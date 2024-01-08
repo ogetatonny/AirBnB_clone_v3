@@ -1,19 +1,19 @@
 #!/usr/bin/python3
 """
 script starts Flask web app
-    listen on 0.0.0.0, port 5000
-    routes: /:                    display "Hello HBNB!"
-            /hbnb:                display "HBNB"
-            /c/<text>:            display "C" + text (replace "_" with " ")
-            /python/<text>:       display "Python" + text (default="is cool")
-            /number/<n>:          display "n is a number" only if int
-            /number_template/<n>: display HTML page only if n is int
-            /number_odd_or_even/<n>: display HTML page; display odd/even info
-            /states_list & /states:  display HTML and state info from storage
-            /cities_by_states:    display HTML and state, city relations
-            /states/<id>:         display HTML and state, city given state id
-            /hbnb_filters:        disp HTML w/ working state, city filter
-            /hbnb:                disp HTML w/ working property, amenity filter
+    listen on port 5000 at 0.0.0.0
+    routes: /:                    shows "Hello HBNB!"
+            /hbnb:                shows "HBNB"
+            /c/<text>:            shows "C" + text (replace "_" with " ")
+            /python/<text>:       shows "Python" + text (default="is cool")
+            /number/<n>:          shows "n is a number" only if int
+            /number_template/<n>: show the HTML page if n is int
+            /number_odd_or_even/<n>: show HTML page; show even and odd info
+            /states_list & /states:  show HTML and state info from storage
+            /cities_by_states:    show HTML and state, city relations
+            /states/<id>:         show HTML and state, city given state id
+            /hbnb_filters:        show HTML w/ working state, city filter
+            /hbnb:                show HTML w/ oper attrib amenity filter
 """
 from models import storage
 from flask import Flask, render_template
@@ -23,7 +23,7 @@ app.url_map.strict_slashes = False
 
 @app.route('/')
 def hello_hbnb():
-    """display text"""
+    """shows the text"""
     return "Hello HBNB!"
 
 
@@ -37,14 +37,14 @@ def hbnb():
 
 @app.route('/c/<text>')
 def c_text(text):
-    """display custom text given"""
+    """shows the text given"""
     return "C {}".format(text.replace('_', ' '))
 
 
 @app.route('/python')
 @app.route('/python/<text>')
 def python_text(text="is cool"):
-    """display custom text given
+    """shows the text given
        first route statement ensures it works for:
           curl -Ls 0.0.0.0:5000/python ; echo "" | cat -e
           curl -Ls 0.0.0.0:5000/python/ ; echo "" | cat -e
@@ -54,23 +54,23 @@ def python_text(text="is cool"):
 
 @app.route('/number/<int:n>')
 def text_if_int(n):
-    """display text only if int given"""
+    """shows text if int gievn"""
     return "{:d} is a number".format(n)
 
 
 @app.route('/number_template/<int:n>')
 def html_if_int(n):
-    """display html page only if int given
-       place given int into html template
+    """shows html page if int given
+       place give int into the html template
     """
     return render_template('5-number.html', n=n)
 
 
 @app.route('/number_odd_or_even/<int:n>')
 def html_odd_or_even(n):
-    """display html page only if int given
-       place given int into html template
-       substitute text to display if int is odd or even
+    """shows html page if int given
+       place given int for html template
+       replaces text to show int is odd or even
     """
     odd_or_even = "even" if (n % 2 == 0) else "odd"
     return render_template('6-number_odd_or_even.html',
@@ -79,15 +79,15 @@ def html_odd_or_even(n):
 
 @app.teardown_appcontext
 def tear_down(self):
-    """after each request remove current SQLAlchemy session"""
+    """Remove current SQLAlchemy session after request."""
     storage.close()
 
 
 @app.route('/states')
 @app.route('/states_list')
 def html_fetch_states():
-    """display html page
-       fetch sorted states to insert into html in UL tag
+    """shows html page
+       get sorted states to add to an HTML UL tag.
     """
     state_objs = [s for s in storage.all("State").values()]
     return render_template('7-states_list.html',
@@ -96,9 +96,9 @@ def html_fetch_states():
 
 @app.route('/cities_by_states')
 def html_fetch_cities_by_states():
-    """display html page
-       fetch sorted states to insert into html in UL tag
-       fetch sorted cities in each state into LI tag ->in HTML file
+    """shows html page
+       retrieve ordered states for the UL tag HTML insert.
+       get ordered cities for state into HTML file LI tag.
     """
     state_objs = [s for s in storage.all("State").values()]
     return render_template('8-cities_by_states.html',
@@ -107,8 +107,8 @@ def html_fetch_cities_by_states():
 
 @app.route('/states/<id>')
 def html_if_stateID(id):
-    """display html page; customize heading with state.name
-       fetch sorted cities for this state ID into LI tag ->in HTML file
+    """show HTML page; use state.name to customize the heading
+       pull sorted cities for state ID into HTML file LI tag
     """
     state_obj = None
     for state in storage.all("State").values():
@@ -120,8 +120,8 @@ def html_if_stateID(id):
 
 @app.route('/hbnb_filters')
 def html_filters():
-    """display html page with working city/state filters & amenities
-       runs with web static css files
+    """show HTML page with functional amenities and city, state filters
+       use static CSS files for the web
     """
     state_objs = [s for s in storage.all("State").values()]
     amenity_objs = [a for a in storage.all("Amenity").values()]
@@ -131,8 +131,8 @@ def html_filters():
 
 @app.route('/hbnb')
 def html_all_filters():
-    """display html page w/ working city/state filters & amenities/properties
-       runs with web static css files
+    """show an HTML page with functional city, state filters and properties
+       use static CSS files for the web
     """
     state_objs = [s for s in storage.all("State").values()]
     amenity_objs = [a for a in storage.all("Amenity").values()]

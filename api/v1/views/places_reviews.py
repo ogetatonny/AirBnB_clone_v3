@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""places_reviews"""
+"""The places_reviews"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
@@ -12,7 +12,7 @@ import uuid
 @app_views.route('/places/<place_id>/reviews', methods=['GET'])
 @app_views.route('/places/<place_id>/reviews/', methods=['GET'])
 def list_reviews_of_place(place_id):
-    ''' Retrieves a list of all Review objects of a Place '''
+    ''' obtains a list of a places review objects. '''
     all_places = storage.all("Place").values()
     place_obj = [obj.to_dict() for obj in all_places if obj.id == place_id]
     if place_obj == []:
@@ -24,7 +24,7 @@ def list_reviews_of_place(place_id):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
 def create_review(place_id):
-    '''Creates a Review'''
+    '''Makes  a Review'''
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'user_id' not in request.get_json():
@@ -61,7 +61,7 @@ def get_review(review_id):
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def delete_review(review_id):
-    '''Deletes a Review object'''
+    '''Removes a Review item'''
     all_reviews = storage.all("Review").values()
     review_obj = [obj.to_dict() for obj in all_reviews if obj.id == review_id]
     if review_obj == []:
@@ -76,7 +76,7 @@ def delete_review(review_id):
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
 def updates_review(review_id):
-    '''Updates a Review object'''
+    '''Revises an object under review'''
     all_reviews = storage.all("Review").values()
     review_obj = [obj.to_dict() for obj in all_reviews if obj.id == review_id]
     if review_obj == []:

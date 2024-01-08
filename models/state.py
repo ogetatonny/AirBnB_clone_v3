@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Implementation of the State class
+    Application of the State class
 '''
 from os import getenv
 from sqlalchemy import Column, String
@@ -11,8 +11,8 @@ import models
 
 class State(BaseModel, Base):
     '''
-        Implementation for the State.
-        Create relationship between class State (parent) to City (child)
+        Execution on behalf of the State.
+        Establish connection between class State and the City.
     '''
     __tablename__ = "states"
 
@@ -26,9 +26,9 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             '''
-                Return list of city instances if City.state_id==current
+                Return list city instances of City.state_id==current
                 State.id
-                FileStorage relationship between State and City
+                FileStorage relationsp between State and City
             '''
             list_cities = []
             for city in models.storage.all("City").values():

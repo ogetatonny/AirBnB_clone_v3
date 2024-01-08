@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""places"""
+"""the places of cities"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
@@ -24,7 +24,7 @@ def list_places_of_city(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
-    '''Retrieves a Place object'''
+    '''Obtains a Place object'''
     all_places = storage.all("Place").values()
     place_obj = [obj.to_dict() for obj in all_places if obj.id == place_id]
     if place_obj == []:
@@ -34,7 +34,7 @@ def get_place(place_id):
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
-    '''Deletes a Place object'''
+    '''Removes a Place entity'''
     all_places = storage.all("Place").values()
     place_obj = [obj.to_dict() for obj in all_places
                  if obj.id == place_id]
@@ -50,7 +50,7 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
 def create_place(city_id):
-    '''Creates a Place'''
+    '''Establishes a Space'''
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'user_id' not in request.get_json():
@@ -78,7 +78,7 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
 def updates_place(place_id):
-    '''Updates a Place object'''
+    '''Modifies a Place entity'''
     all_places = storage.all("Place").values()
     place_obj = [obj.to_dict() for obj in all_places if obj.id == place_id]
     if place_obj == []:

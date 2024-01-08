@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 """
-script starts Flask web app
-    listen on 0.0.0.0, port 5000
-    routes: /:                    display "Hello HBNB!"
-            /hbnb:                display "HBNB"
-            /c/<text>:            display "C" + text (replace "_" with " ")
-            /python/<text>:       display "Python" + text (default="is cool")
-            /number/<n>:          display "n is a number" only if int
-            /number_template/<n>: display HTML page only if n is int
-            /number_odd_or_even/<n>: display HTML page; display odd/even info
-            /states_list:         display HTML and state info from storage;
+launch the Flask web application
+    listen on 0.0.0.0 at port 5000
+    routes: /:                    shows "Hello HBNB!"
+            /hbnb:                shows "HBNB"
+            /c/<text>:            shows "C" + text (replace "_" with " ")
+            /python/<text>:       shows "Python" + text (default="is cool")
+            /number/<n>:          shows "n is number" only if integer
+            /number_template/<n>: shows HTML page if n is integer
+            /number_odd_or_even/<n>: display HTML page; display odd, even
+            /states_list:         show HTML and stored state information;
 """
 from models import storage
 from models import *
@@ -20,27 +20,27 @@ app.url_map.strict_slashes = False
 
 @app.route('/')
 def hello_hbnb():
-    """display text"""
+    """shows text"""
     return "Hello HBNB!"
 
 
 @app.route('/hbnb')
 def hbnb():
-    """display text"""
+    """showsb the text"""
     return "HBNB"
 
 
 @app.route('/c/<text>')
 def c_text(text):
-    """display custom text given"""
+    """shows the text given"""
     return "C {}".format(text.replace('_', ' '))
 
 
 @app.route('/python')
 @app.route('/python/<text>')
 def python_text(text="is cool"):
-    """display custom text given
-       first route statement ensures it works for:
+    """shows text given
+       first route statement guarantees its functions for:
           curl -Ls 0.0.0.0:5000/python ; echo "" | cat -e
           curl -Ls 0.0.0.0:5000/python/ ; echo "" | cat -e
     """
@@ -49,23 +49,23 @@ def python_text(text="is cool"):
 
 @app.route('/number/<int:n>')
 def text_if_int(n):
-    """display text only if int given"""
+    """shows text if int given"""
     return "{:d} is a number".format(n)
 
 
 @app.route('/number_template/<int:n>')
 def html_if_int(n):
-    """display html page only if int given
-       place given int into html template
+    """shows html page if int given
+       supplied integer into the HTML template
     """
     return render_template('5-number.html', n=n)
 
 
 @app.route('/number_odd_or_even/<int:n>')
 def html_odd_or_even(n):
-    """display html page only if int given
-       place given int into html template
-       substitute text to display if int is odd or even
+    """shows html page if int given
+       place gives int for html template
+       replace text to show int is odd or even
     """
     odd_or_even = "even" if (n % 2 == 0) else "odd"
     return render_template('6-number_odd_or_even.html',
@@ -74,14 +74,14 @@ def html_odd_or_even(n):
 
 @app.teardown_appcontext
 def tear_down(self):
-    """after each request remove current SQLAlchemy session"""
+    """upon request it removes SQLAlchemy session"""
     storage.close()
 
 
 @app.route('/states_list')
 def html_fetch_states():
-    """display html page
-       fetch sorted states to insert into html in UL tag
+    """shows html page
+       fetch states to put into html of UL tag
     """
     state_objs = [s for s in storage.all("State").values()]
     return render_template('7-states_list.html',

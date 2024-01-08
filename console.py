@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Implementing the console for the HBnB project.
+    Constructing the HBnB project console.
 '''
 import cmd
 import json
@@ -18,26 +18,26 @@ from models.review import Review
 
 class HBNBCommand(cmd.Cmd):
     '''
-        Contains the entry point of the command interpreter.
+        comprising the command interpreter entry point.
     '''
     prompt = ("(hbnb) ")
 
     def do_quit(self, args):
         '''
-            Quit command to exit the program.
+            To end the program use the Quit command.
         '''
         return True
 
     def do_EOF(self, args):
         '''
-            Exits after receiving the EOF signal.
+            Departs upon obtaining the EOF signal.
         '''
         return True
 
     def do_create(self, args):
         '''
-            Create a new instance of class BaseModel and saves it
-            to the JSON file.
+            Make a fresh instance of the BaseModel class
+            and store it in a JSON file.
         '''
         if len(args) == 0:
             print("** class name missing **")
@@ -66,8 +66,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, args):
         '''
-            Print the string representation of an instance baed on
-            the class name and id given as args.
+            With the class name and id provided as arguments, print
+            the string representation of an instance of bead.
         '''
         args = shlex.split(args)
         if len(args) == 0:
@@ -91,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, args):
         '''
-            Deletes an instance based on the class name and id.
+            Removes an instance by using its id and class name.
         '''
         args = shlex.split(args)
         if len(args) == 0:
@@ -118,8 +118,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         '''
-            Prints all string representation of all instances
-            based or not on the class name.
+            outputs every instance string representation
+            whether or not the class name is specified.
         '''
         args = args.split(" ")
         obj_list = []
@@ -139,8 +139,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         '''
-            Update an instance based on the class name and id
-            sent as args.
+            Using the class name and id supplied as arguments
+            update an instance.
         '''
         storage.reload()
         args = shlex.split(args)
@@ -178,13 +178,13 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         '''
-            Prevents printing anything when an empty line is passed.
+            stops printing anything when a line is passed that is empty.
         '''
         pass
 
     def do_count(self, args):
         '''
-            Counts/retrieves the number of instances.
+            Determines or counts the quantity of occurrences.
         '''
         obj_list = []
         storage.reload()
@@ -205,7 +205,7 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, args):
         '''
-            Catches all the function names that are not expicitly defined.
+            captures all function names that arent stated explicitly.
         '''
         functions = {"all": self.do_all, "update": self.do_update,
                      "show": self.do_show, "count": self.do_count,
@@ -222,6 +222,6 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == "__main__":
     '''
-        Entry point for the loop.
+        Point of entry into the loop.
     '''
     HBNBCommand().cmdloop()

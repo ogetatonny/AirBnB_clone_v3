@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Implementation of the User class which inherits from BaseModel
+    User class implementation which derives from BaseModel
 '''
 from os import getenv
 from sqlalchemy import Column, String
@@ -10,7 +10,7 @@ from models.base_model import BaseModel, Base
 
 class User(BaseModel, Base):
     '''
-        Definition of the User class
+        An explanation of the User class
     '''
     __tablename__ = "users"
     if getenv("HBNB_TYPE_STORAGE", "fs") == "db":

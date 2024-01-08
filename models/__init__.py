@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Package initializer
+    Initializer for packages
 '''
 from os import getenv
 from models.base_model import BaseModel

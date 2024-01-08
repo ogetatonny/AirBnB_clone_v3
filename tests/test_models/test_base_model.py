@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 '''
-    All the test for the base_model are implemented here.
+    Here is where all of the base_model tests are implemented.
 '''
 
 import unittest
@@ -16,11 +16,11 @@ storage = getenv("HBNB_TYPE_STORAGE", "fs")
 
 class TestBase(unittest.TestCase):
     '''
-        Testing the base class model.
+        Examining the model of basic class.
     '''
     def setUp(self):
         '''
-            Initializing instance.
+            Setting up the instance.
         '''
         self.my_model = BaseModel()
         self.my_model.name = "Binita Rai"
@@ -28,39 +28,39 @@ class TestBase(unittest.TestCase):
 
     def TearDown(self):
         '''
-            Removing instance.
+            Eliminating the instance.
         '''
         del self.my_model
 
     def test_id_type(self):
         '''
-            Checks that the type of the id is string.
+            Verifies the identity's string type.
         '''
         self.assertEqual("<class 'str'>", str(type(self.my_model.id)))
 
     def test_ids_differ(self):
         '''
-            Checks that the ids between two instances are different.
+            Verifies the IDs of two instances differ from one another.
         '''
         new_model = BaseModel()
         self.assertNotEqual(new_model.id, self.my_model.id)
 
     def test_name(self):
         '''
-            Checks that an attribute can be added.
+            Verifies if an attribute is addable.
         '''
         self.assertEqual("Binita Rai", self.my_model.name)
 
     def test_a_updated_created_equal(self):
         '''
-            Checks that both dates are equal.
+            Verify if the two dates are the same.
         '''
         self.assertEqual(self.my_model.updated_at.year,
                          self.my_model.created_at.year)
 
     def test_str_overide(self):
         '''
-            Checks that the right message gets printed.
+            Verifies the correct message is printed.
         '''
         backup = sys.stdout
         inst_id = self.my_model.id
@@ -76,7 +76,7 @@ class TestBase(unittest.TestCase):
 
     def test_to_dict_type(self):
         '''
-            Checks that the to_dict method return type.
+            Verifies the return type of the to_dict function.
         '''
 
         self.assertEqual("<class 'dict'>",
@@ -84,29 +84,29 @@ class TestBase(unittest.TestCase):
 
     def test_to_dict_class(self):
         '''
-            Checks that the __class__ key exists.
+            Verifies the existence of the __class__ key.
         '''
 
         self.assertEqual("BaseModel", (self.my_model.to_dict())["__class__"])
 
     def test_to_dict_type_updated_at(self):
         '''
-            Checks the type of the value of updated_at.
+            Verifies the updated_at value type.
         '''
         self.assertEqual("<class 'str'>",
                          str(type((self.my_model.to_dict())["updated_at"])))
 
     def test_to_dict_type_created_at(self):
         '''
-            Checks the type of the value of created_at.
+            Verifies the kind of created_at value.
         '''
         tmp = self.my_model.to_dict()
         self.assertEqual("<class 'str'>", str(type(tmp["created_at"])))
 
     def test_kwargs_instantiation(self):
         '''
-            Test that an instance is created using the
-            key value pair.
+            Verify that the key-value pair is used
+            to construct an instance.
         '''
         my_model_dict = self.my_model.to_dict()
         new_model = BaseModel(**my_model_dict)
@@ -114,8 +114,8 @@ class TestBase(unittest.TestCase):
 
     def test_type_created_at(self):
         '''
-            Test that the new_model's updated_at
-            data type is datetime.
+            Verify that the updated_at data type for
+            the new_model is datetime.
         '''
         my_model_dict = self.my_model.to_dict()
         new_model = BaseModel(my_model_dict)
@@ -123,8 +123,8 @@ class TestBase(unittest.TestCase):
 
     def test_type_updated_at(self):
         '''
-            Test that the new_model's created_at
-            data type is datetime.
+            Verify that the data type for
+            the new_model is datetime.
         '''
         my_model_dict = self.my_model.to_dict()
         new_model = BaseModel(my_model_dict)
@@ -132,8 +132,8 @@ class TestBase(unittest.TestCase):
 
     def test_compare_dict(self):
         '''
-            Test that the new_model's and my_model's
-            dictionary values are same.
+            Verify that the dictionary values of the new_model
+            and my_model are the same.
         '''
         my_model_dict = self.my_model.to_dict()
         new_model = BaseModel(**my_model_dict)
@@ -142,8 +142,8 @@ class TestBase(unittest.TestCase):
 
     def test_instance_diff(self):
         '''
-            Test that the my_model and new_model are
-            not the same instance.
+            Verify that the instances of my_model
+            and new_model are different.
         '''
         my_model_dict = self.my_model.to_dict()
         new_model = BaseModel(my_model_dict)
@@ -152,8 +152,8 @@ class TestBase(unittest.TestCase):
     @unittest.skipIf(storage == "db", "Testing database storage only")
     def test_save(self):
         '''
-            Checks that after updating the instance; the dates differ in the
-            updated_at attribute.
+            Verifies that the dates in the updated_at
+            attribute are different after updating the instance.
         '''
         old_update = self.new.updated_at
         self.new.save()
@@ -162,7 +162,7 @@ class TestBase(unittest.TestCase):
     @unittest.skipIf(storage != "db", "Testing if using DBStorage")
     def test_basemodel_hasattr(self):
         '''
-            Checks Class attributes
+            Verifies the class attributes
         '''
         self.assertTrue(hasattr(self.new, "id"))
         self.assertTrue(hasattr(self.new, "created_at"))
@@ -171,7 +171,7 @@ class TestBase(unittest.TestCase):
     @unittest.skipIf(storage != "db", "Testing if using DBStorage")
     def test_basemodel_attrtype(self):
         '''
-            Check is attributes type
+            Examine the characteristics type
         '''
         new2 = BaseModel
         self.assertFalse(isinstance(new2.id, str))

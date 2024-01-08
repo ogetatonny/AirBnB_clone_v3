@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""states"""
+"""the list states"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
@@ -10,14 +10,14 @@ import uuid
 
 @app_views.route('/states/', methods=['GET'])
 def list_states():
-    '''Retrieves a list of all State objects'''
+    '''Obtains a list of every object in the State'''
     list_states = [obj.to_dict() for obj in storage.all("State").values()]
     return jsonify(list_states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
-    '''Retrieves a State object'''
+    '''Brings up a State object'''
     all_states = storage.all("State").values()
     state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
     if state_obj == []:
@@ -27,7 +27,7 @@ def get_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
-    '''Deletes a State object'''
+    '''Eliminates a State entity'''
     all_states = storage.all("State").values()
     state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
     if state_obj == []:
@@ -42,7 +42,7 @@ def delete_state(state_id):
 
 @app_views.route('/states/', methods=['POST'])
 def create_state():
-    '''Creates a State'''
+    '''Establishes a State'''
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
@@ -57,7 +57,7 @@ def create_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def updates_state(state_id):
-    '''Updates a State object'''
+    '''Modifies a State object'''
     all_states = storage.all("State").values()
     state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
     if state_obj == []:

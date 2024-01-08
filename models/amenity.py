@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Implementation of the Amenity class
+    Putting the Amenity class into practice
 '''
 from os import getenv
 from models.base_model import BaseModel, Base
@@ -11,7 +11,7 @@ from sqlalchemy.orm import relationship
 
 class Amenity(BaseModel, Base):
     '''
-        Implementation for the Amenities.
+        Execution of the Facilities.
     '''
     __tablename__ = "amenities"
     if getenv("HBNB_TYPE_STORAGE") == "db":

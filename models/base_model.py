@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    This module defines the BaseModel class
+    The BaseModel class is defined in this module.
 '''
 from os import getenv
 import uuid
@@ -15,7 +15,7 @@ Base = declarative_base()
 
 class BaseModel:
     '''
-        Base class for other classes to be used for the duration.
+        Base class that will be used temporarily by other classes.
     '''
     id = Column(String(60), nullable=False, primary_key=True)
     created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
@@ -23,7 +23,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         '''
-            Initialize public instance attributes.
+            Set up the characteristics of the public instance.
         '''
         if (len(kwargs) == 0):
             self.id = str(uuid.uuid4())
@@ -48,21 +48,21 @@ class BaseModel:
 
     def __str__(self):
         '''
-            Return string representation of BaseModel class
+            Return the BaseModel class string representation.
         '''
         return ("[{}] ({}) {}".format(self.__class__.__name__,
                                       self.id, self.__dict__))
 
     def __repr__(self):
         '''
-            Return string representation of BaseModel class
+            The BaseModel class return string representation
         '''
         return ("[{}] ({}) {}".format(self.__class__.__name__,
                                       self.id, self.__dict__))
 
     def save(self):
         '''
-            Update the updated_at attribute with new.
+            Add new information to the updated_at attribute.
         '''
         self.updated_at = datetime.now()
         models.storage.new(self)
@@ -70,7 +70,7 @@ class BaseModel:
 
     def to_dict(self):
         '''
-            Return dictionary representation of BaseModel class.
+            Provide the BaseModel class dictionary representation back.
         '''
         cp_dct = dict(self.__dict__)
         cp_dct['__class__'] = self.__class__.__name__
@@ -82,6 +82,6 @@ class BaseModel:
 
     def delete(self):
         '''
-            Deletes an object
+            Removes an object
         '''
         models.storage.delete(self)
